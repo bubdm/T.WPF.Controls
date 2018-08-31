@@ -9,8 +9,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <tc:ColorsSelector x:Name="colorCanvas" Width="20" Height="400" Margin="0" BorderBrush="Red" BorderThickness="0"
-                         HorizontalAlignment="Left"/>
+            <tc:ColorsSelector x:Name="colorCanvas" Width="200" Margin="0" BorderBrush="Red" BorderThickness="0"
+                         HorizontalAlignment="Left" Padding="40"/>
             <Rectangle  Width="80" Height="80"
                        Margin="20">
                 <Rectangle.Fill>

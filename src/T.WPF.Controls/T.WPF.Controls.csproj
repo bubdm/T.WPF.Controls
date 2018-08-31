@@ -54,7 +54,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ColorsCanvas.cs" />
+    <Compile Include="Controls\ColorsSelector.cs" />
     <Compile Include="Converters\CalculatorConverter.cs" />
     <Compile Include="Converters\ColorConverters.cs" />
     <Compile Include="core\Vector3i.cs" />

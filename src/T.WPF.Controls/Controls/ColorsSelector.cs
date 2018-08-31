@@ -21,6 +21,8 @@ namespace T.Controls
     /// <summary>
     /// 颜色画布，显示和选择所有颜色
     /// </summary>
+    [TemplatePart(Name = "PART_SelctorThumb", Type =typeof(Thumb))]
+    [TemplatePart(Name = "PART_Container", Type =typeof(Control))]
     public class ColorsSelector : Control
     {
         private static readonly Vector3i[][] ColorArray = new Vector3i[][]
@@ -106,10 +108,10 @@ namespace T.Controls
             var top = Canvas.GetTop(selctorThumb) + e.VerticalChange;
             if (top < -delta)
                 top = -delta;
-            else if (top >= ActualHeight - delta)
-                top = ActualHeight - delta;
+            else if (top >= container.ActualHeight - delta)
+                top = container.ActualHeight - delta;
             Canvas.SetTop(selctorThumb, top);
-            var x = (top + delta) / ActualHeight;
+            var x = (top + delta) / container.ActualHeight;
             var color = CalculateColor(x);
             if (SelectedColor != color)
             {
