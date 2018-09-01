@@ -7,3 +7,5 @@ wpf的控件集合，主要是对wpf原生控件的扩展，加入非常常用�
 * [ ] PropertyGrid
 * [ ] ScrollTabControl 
  
+ ### ColorPicker
+![ColorPicker效果](docs/images/colorpicker.png)
