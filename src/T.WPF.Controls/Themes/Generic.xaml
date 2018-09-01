@@ -21,7 +21,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
 
     <Style TargetType="{x:Type local:ColorsSelector}">
         <Setter Property="SelectorThumbStyle" Value="{StaticResource SelectorThumb}"/>
@@ -54,6 +53,74 @@
                                 </Thumb>
                             </Canvas>
                         </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SingleColorThumbStyle" TargetType="Thumb">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border 
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="Transparent">
+                        <!--<Ellipse Fill="{TemplateBinding Background}"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 Margin="{TemplateBinding Padding}"/>-->
+                        <Viewbox>
+                            <Grid>
+                                <Ellipse Width="20" Height="20" StrokeThickness="6" Stroke="{TemplateBinding BorderBrush}" Fill="Transparent"/>
+                                <Ellipse  Width="17" Height="17" StrokeThickness="3" Stroke="Black" Fill="Transparent"/>
+                            </Grid>
+                        </Viewbox>
+                        
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:SingleColorPanel}">
+        <Setter Property="SelectorStyle" Value="{StaticResource SingleColorThumbStyle}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SingleColorPanel}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid x:Name="PART_Container" Margin="{TemplateBinding Padding}">
+                                <Rectangle x:Name="WhiteGradient" Margin="0">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop  Offset="0" Color="#ffffffff" />
+                                            <GradientStop x:Name="color" Offset="1"
+                                                          Color="{Binding SourceColor, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle x:Name="BlackGradient" Margin="0">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,1" EndPoint="0, 0">
+                                            <GradientStop Offset="0" Color="#ff000000" />
+                                            <GradientStop Offset="1" Color="#00000000" />
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            <Canvas Margin="0">
+                                <Thumb x:Name="PART_Selector"
+                                   Style="{TemplateBinding SelectorStyle}"
+                                   Canvas.Top="-5" Canvas.Left="-5" 
+                                       Width="14" Height="14"
+                                       BorderBrush="White"
+                                       BorderThickness="1" Background="#FFD11515">
+                                </Thumb>
+                            </Canvas>
+                        </Grid>
+                        
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

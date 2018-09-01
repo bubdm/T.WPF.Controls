@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\ColorsSelector.cs" />
+    <Compile Include="Controls\SingleColorPanel.cs" />
     <Compile Include="Converters\CalculatorConverter.cs" />
     <Compile Include="Converters\ColorConverters.cs" />
     <Compile Include="core\Vector3i.cs" />

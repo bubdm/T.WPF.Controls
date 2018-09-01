@@ -22,7 +22,7 @@ namespace T.Controls.core
         }
         public Vector3i(Color color)
         {
-            R = color.A;
+            R = color.R;
             G = color.G;
             B = color.B;
         }

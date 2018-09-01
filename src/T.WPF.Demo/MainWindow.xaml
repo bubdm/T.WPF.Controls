@@ -14,9 +14,12 @@
             <Rectangle  Width="80" Height="80"
                        Margin="20">
                 <Rectangle.Fill>
-                    <SolidColorBrush Color="{Binding SelectedColor, ElementName=colorCanvas, UpdateSourceTrigger=PropertyChanged}"/>
+                    <SolidColorBrush Color="{Binding SelectedColor, ElementName=singleColorpanel, UpdateSourceTrigger=PropertyChanged}"/>
                 </Rectangle.Fill>
             </Rectangle>
+            <tc:SingleColorPanel x:Name="singleColorpanel" 
+                                 SourceColor="{Binding SelectedColor, ElementName=colorCanvas, UpdateSourceTrigger=PropertyChanged}"
+                                 Width="200" Height="200"/>
         </StackPanel>
         
     </Grid>

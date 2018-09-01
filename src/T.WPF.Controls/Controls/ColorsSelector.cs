@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using T.Controls.core;
-using T.Controls.Extensions;
 
 namespace T.Controls
 {
@@ -59,7 +49,6 @@ namespace T.Controls
         public static readonly DependencyProperty SelectorThumbStyleProperty =
             DependencyProperty.Register("SelectorThumbStyle", typeof(Style), typeof(ColorsSelector), new PropertyMetadata(null));
 
-
         /// <summary>
         /// currently selected color's value
         /// </summary>
@@ -69,13 +58,23 @@ namespace T.Controls
             set { SetValue(SelectedColorProperty, value); }
         }
 
+        /// <summary>
+        /// SelectedColor DependencyProperty
+        /// </summary>
         public static readonly DependencyProperty SelectedColorProperty =
             DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorsSelector), new PropertyMetadata(Colors.Transparent));
-
-
-
+        
         public override void OnApplyTemplate()
         {
+            if(selctorThumb != null)
+            {
+                selctorThumb.DragDelta -= SelectorThumb_DragDelta;
+            }
+            if(container != null)
+            {
+                container.MouseLeftButtonDown -= ColorsCanvas_MouseLeftButtonDown;
+            }
+
             selctorThumb = (Thumb)GetTemplateChild(PART_SelctorThumb);
             if(selctorThumb != null)
             {
@@ -131,6 +130,5 @@ namespace T.Controls
             var color = ColorArray[i][0] + ColorArray[i][1] * (int)(255 * d);
             return color.ToColor();
         }
-
     }
 }
