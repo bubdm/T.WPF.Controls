@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -70,6 +71,7 @@ namespace T.Controls
             if (selctorThumb != null)
             {
                 selctorThumb.DragDelta += SelectorThumb_DragDelta;
+                selctorThumb.MouseLeftButtonDown += SelctorThumb_MouseLeftButtonDown;
             }
 
             container = (Panel)GetTemplateChild(PART_Container);
@@ -81,6 +83,17 @@ namespace T.Controls
             base.OnApplyTemplate();
         }
 
+        private void SelctorThumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var point = e.GetPosition(selctorThumb);
+            Console.WriteLine(point);
+        }
+
+        /// <summary>
+        /// TODO: 单击后能进行拖动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Conainter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var point = e.GetPosition(container);
