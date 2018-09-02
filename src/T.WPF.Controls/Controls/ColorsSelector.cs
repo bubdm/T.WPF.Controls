@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -43,7 +44,13 @@ namespace T.Controls
         }
 
         public static readonly DependencyProperty HubProperty =
-            DependencyProperty.Register("Hub", typeof(double), typeof(HubSelector), new PropertyMetadata(1.0));
+            DependencyProperty.Register("Hub", typeof(double), typeof(HubSelector), new PropertyMetadata(1.0, OnHubChangedCallback));
+
+        private static void OnHubChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (HubSelector)d;
+            control.SetSlectorPositon((double)e.NewValue);
+        }
 
         public override void OnApplyTemplate()
         {

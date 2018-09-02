@@ -44,8 +44,16 @@ namespace T.Controls
         {
             var control = (SingleColorPanel)d;
             var color = (Color)e.NewValue;
-            var newh = ColorHelper.GetHube(color);
-           
+            var hsv = ColorHelper.RGB2HSV(color);
+            if (hsv.H != control.Hub)
+            {
+                control.Hub = hsv.H;
+                if (control.container != null)
+                {
+                    control.SetSelectorPositionByScale(hsv.S,1- hsv.V);
+                }
+            }
+
         }
 
         private Thumb selectorThumb;
@@ -86,18 +94,6 @@ namespace T.Controls
             }
 
             base.OnApplyTemplate();
-        }
-
-        public void UpdateColor()
-        {
-            if (selectorThumb != null)
-            {
-                var color = CalcluteColor(GetSelectorCenter());
-                if (color != SelectedColor)
-                {
-                    SelectedColor = color;
-                }
-            }
         }
 
         private void SelctorThumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -149,6 +145,17 @@ namespace T.Controls
         }
 
         /// <summary>
+        /// set selector thumb position
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <returns>return the selector thumb center position relatived to container</returns>
+        private void SetSelectorPositionByScale(double pleft, double ptop)
+        {
+            SetSelectorPosition(container.ActualWidth * pleft - selectorThumb.ActualWidth / 2, container.ActualHeight * ptop - selectorThumb.ActualHeight / 2);
+        }
+
+        /// <summary>
         /// get selector thumb current position relatived to container
         /// </summary>
         /// <returns></returns>
@@ -177,7 +184,7 @@ namespace T.Controls
         {
             var px = point.X / container.ActualWidth;
             var py = point.Y / container.ActualHeight;
-            var color= ColorHelper.HSV2RGB(new HSVColor((float)Hub, (float)(px), (float)(1 - py)));
+            var color= ColorHelper.HSV2RGB(new HSVColor(Hub, px, 1 - py));
             return color;
         }
     }

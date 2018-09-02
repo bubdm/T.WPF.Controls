@@ -11,7 +11,7 @@ namespace T.Controls.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var hub = (double)value;
-            var color= ColorHelper.HSV2RGB(new HSVColor((float)hub, 1, 1));
+            var color= ColorHelper.HSV2RGB(new HSVColor(hub, 1, 1));
             return color;
         }
 

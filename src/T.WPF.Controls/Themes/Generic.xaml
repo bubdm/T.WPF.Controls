@@ -166,7 +166,7 @@
                                                       SelectorThumbStyle="{TemplateBinding ColorsSelectorStyle}"/>
                                 <local:SingleColorPanel x:Name="singleColorPanel" 
                                                         DockPanel.Dock="Left"
-                                                        Hub="{Binding Hub, ElementName=colorselector}"
+                                                        Hub="{Binding Hub, ElementName=colorselector, Mode=TwoWay}"
                                                         SelectedColor="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
                                                         SelectorStyle="{TemplateBinding SingleColorSelecterStyle}"/>
                             </DockPanel>

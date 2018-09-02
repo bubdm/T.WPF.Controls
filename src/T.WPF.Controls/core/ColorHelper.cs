@@ -57,7 +57,7 @@ namespace T.Controls.core
             var min = Math.Min(r, Math.Min(b, g));
             var delta = max - min;
 
-            float h,s,v;
+            double h,s,v;
             v = max;
             if(max != 0 && delta != 0)
             {
