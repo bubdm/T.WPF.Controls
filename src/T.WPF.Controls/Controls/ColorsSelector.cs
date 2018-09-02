@@ -1,40 +1,28 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
-using T.Controls.core;
 
 namespace T.Controls
 {
     /// <summary>
     /// 颜色画布，显示和选择所有颜色
     /// </summary>
-    [TemplatePart(Name = "PART_SelctorThumb", Type =typeof(Thumb))]
-    [TemplatePart(Name = "PART_Container", Type =typeof(Control))]
-    public class ColorsSelector : Control
+    [TemplatePart(Name = "PART_SelctorThumb", Type = typeof(Thumb))]
+    [TemplatePart(Name = "PART_Container", Type = typeof(Control))]
+    public class HubSelector : Control
     {
-        private static readonly Vector3i[][] ColorArray = new Vector3i[][]
-        {
-            new Vector3i[]{ new Vector3i(255, 0, 0), new Vector3i(0, 1,0)},
-            new Vector3i[]{ new Vector3i(255, 255, 0), new Vector3i(-1,0,0)},
-            new Vector3i[]{ new Vector3i(0, 255, 0), new Vector3i(0,0,1)},
-            new Vector3i[]{ new Vector3i(0, 255, 255), new Vector3i(0,-1,0)},
-            new Vector3i[]{ new Vector3i(0, 0, 255), new Vector3i(1,0,0)},
-            new Vector3i[]{ new Vector3i(255, 0, 255), new Vector3i(0,0,-1)},
-        };
         private static readonly string PART_SelctorThumb = "PART_SelctorThumb";
         private static readonly string PART_Container = "PART_Container";
-        
 
-        private Thumb selctorThumb;
+
+        private Thumb selectorThumb;
         private Panel container;
-        static ColorsSelector()
+        static HubSelector()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorsSelector), new FrameworkPropertyMetadata(typeof(ColorsSelector)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HubSelector), new FrameworkPropertyMetadata(typeof(HubSelector)));
         }
-        
+
         /// <summary>
         /// get or set color selector thumb style
         /// </summary>
@@ -47,88 +35,74 @@ namespace T.Controls
         /// SelectorThumbStyle DependencyProperty
         /// </summary>
         public static readonly DependencyProperty SelectorThumbStyleProperty =
-            DependencyProperty.Register("SelectorThumbStyle", typeof(Style), typeof(ColorsSelector), new PropertyMetadata(null));
-
-        /// <summary>
-        /// currently selected color's value
-        /// </summary>
-        public Color SelectedColor
+            DependencyProperty.Register("SelectorThumbStyle", typeof(Style), typeof(HubSelector), new PropertyMetadata(null));
+        public double Hub
         {
-            get { return (Color)GetValue(SelectedColorProperty); }
-            set { SetValue(SelectedColorProperty, value); }
+            get { return (double)GetValue(HubProperty); }
+            set { SetValue(HubProperty, value); }
         }
 
-        /// <summary>
-        /// SelectedColor DependencyProperty
-        /// </summary>
-        public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorsSelector), new PropertyMetadata(Colors.Transparent));
-        
+        public static readonly DependencyProperty HubProperty =
+            DependencyProperty.Register("Hub", typeof(double), typeof(HubSelector), new PropertyMetadata(1.0));
+
         public override void OnApplyTemplate()
         {
-            if(selctorThumb != null)
+            if (selectorThumb != null)
             {
-                selctorThumb.DragDelta -= SelectorThumb_DragDelta;
+                selectorThumb.DragDelta -= SelectorThumb_DragDelta;
             }
-            if(container != null)
+            if (container != null)
             {
                 container.MouseLeftButtonDown -= ColorsCanvas_MouseLeftButtonDown;
             }
 
-            selctorThumb = (Thumb)GetTemplateChild(PART_SelctorThumb);
-            if(selctorThumb != null)
+            selectorThumb = (Thumb)GetTemplateChild(PART_SelctorThumb);
+            if (selectorThumb != null)
             {
-                selctorThumb.DragDelta += SelectorThumb_DragDelta;
+                selectorThumb.DragDelta += SelectorThumb_DragDelta;
             }
 
             container = (Panel)GetTemplateChild(PART_Container);
-            if(container != null)
+            if (container != null)
             {
                 container.MouseLeftButtonDown += ColorsCanvas_MouseLeftButtonDown;
             }
             base.OnApplyTemplate();
         }
 
+        protected void SetSlectorPositon(double x)
+        {
+            if (selectorThumb != null)
+            {
+                Canvas.SetTop(selectorThumb, container.ActualHeight * x - selectorThumb.ActualHeight / 2);
+            }
+        }
+
         private void ColorsCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var point = e.GetPosition(container);
             var x = point.Y / container.ActualHeight;
-            var color = CalculateColor(x);
-            if (SelectedColor != color)
+            Canvas.SetTop(selectorThumb, point.Y - selectorThumb.ActualHeight / 2);
+            if (Hub != x)
             {
-                SelectedColor = color;
+                Hub = x;
             }
-            Canvas.SetTop(selctorThumb, point.Y - selctorThumb.ActualHeight / 2);
         }
 
         private void SelectorThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            var delta = selctorThumb.ActualHeight / 2;
-            var top = Canvas.GetTop(selctorThumb) + e.VerticalChange;
+            var delta = selectorThumb.ActualHeight / 2;
+            var top = Canvas.GetTop(selectorThumb) + e.VerticalChange;
             if (top < -delta)
                 top = -delta;
             else if (top >= container.ActualHeight - delta)
                 top = container.ActualHeight - delta;
-            Canvas.SetTop(selctorThumb, top);
+            Canvas.SetTop(selectorThumb, top);
             var x = (top + delta) / container.ActualHeight;
-            var color = CalculateColor(x);
-            if (SelectedColor != color)
+            if (Hub != x)
             {
-                SelectedColor = color;
+                Hub = x;
             }
-        }
-        
-        private Color CalculateColor(double x)
-        {
-            if (x >= 1)
-            {
-                return ColorArray[0][0].ToColor();
-            }
-            var num = x * 6;
-            var i = (int)Math.Truncate(num);
-            var d = num - i;
-            var color = ColorArray[i][0] + ColorArray[i][1] * (int)(255 * d);
-            return color.ToColor();
         }
     }
 }

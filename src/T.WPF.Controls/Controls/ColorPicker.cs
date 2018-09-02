@@ -17,7 +17,6 @@ namespace T.Controls
 {
     /// <summary>
     ///
-    ///     <MyNamespace:ColorPicker/>
     ///
     /// </summary>
     public class ColorPicker : Control
@@ -26,8 +25,6 @@ namespace T.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPicker), new FrameworkPropertyMetadata(typeof(ColorPicker)));
         }
-
-
 
         public Style ExpanderStyle
         {
@@ -53,23 +50,16 @@ namespace T.Controls
             set { SetValue(SingleColorSelecterStyleProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for SingleColorSelecterStyle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SingleColorSelecterStyleProperty =
             DependencyProperty.Register("SingleColorSelecterStyle", typeof(Style), typeof(ColorPicker), new PropertyMetadata(null));
-
-
-
-
+        
         public Color Color
         {
             get { return (Color)GetValue(ColorProperty); }
             set { SetValue(ColorProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Color.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ColorProperty =
             DependencyProperty.Register("Color", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
-
-
     }
 }

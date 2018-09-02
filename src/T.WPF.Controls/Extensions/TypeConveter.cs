@@ -36,6 +36,9 @@ namespace T.Controls.Extensions
             return double.Parse(source);
         }
 
-
+        public static Color ToColor(int source)
+        {
+            return Colors.Red;
+        }
     }
 }

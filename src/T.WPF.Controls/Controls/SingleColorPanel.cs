@@ -9,29 +9,28 @@ using T.Controls.core;
 namespace T.Controls
 {
     /// <summary>
-    /// skjjkjjkingle color selector Panel
+    /// single color selector Panel
     /// </summary>
+    [TemplatePart(Name = "PART_Selector", Type =typeof(Thumb))]
+    [TemplatePart(Name = "PART_Container", Type =typeof(Panel))]
     public class SingleColorPanel : Control
     {
         private static readonly string PART_Selctor = "PART_Selector";
         private static readonly string PART_Container = "PART_Container";
-        private static Vector3i white = new Vector3i(255,255,255);
 
         static SingleColorPanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SingleColorPanel), new FrameworkPropertyMetadata(typeof(SingleColorPanel)));
         }
-        
-        public Color SourceColor
+       
+        public double Hub
         {
-            get { return (Color)GetValue(SourceColorProperty); }
-            set { SetValue(SourceColorProperty, value); }
+            get { return (double)GetValue(HubProperty); }
+            set { SetValue(HubProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for SourceColor.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SourceColorProperty =
-            DependencyProperty.Register("SourceColor", typeof(Color), typeof(SingleColorPanel), new PropertyMetadata(Colors.Transparent));
-
+        public static readonly DependencyProperty HubProperty =
+            DependencyProperty.Register("Hub", typeof(double), typeof(SingleColorPanel), new PropertyMetadata(1.0));
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
@@ -39,10 +38,17 @@ namespace T.Controls
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(SingleColorPanel), new PropertyMetadata(Colors.Red));
+            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(SingleColorPanel), new PropertyMetadata(Colors.Red, OnSelectedColorChanged));
 
+        private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (SingleColorPanel)d;
+            var color = (Color)e.NewValue;
+            var newh = ColorHelper.GetHube(color);
+           
+        }
 
-        private Thumb selctorThumb;
+        private Thumb selectorThumb;
         private Panel container;
 
         public Style SelectorStyle
@@ -51,27 +57,26 @@ namespace T.Controls
             set { SetValue(SelectorStyleProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for SelectorStyle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectorStyleProperty =
             DependencyProperty.Register("SelectorStyle", typeof(Style), typeof(SingleColorPanel), new PropertyMetadata(null));
 
         public override void OnApplyTemplate()
         {
 
-            if (selctorThumb != null)
+            if (selectorThumb != null)
             {
-                selctorThumb.DragDelta -= SelectorThumb_DragDelta;
+                selectorThumb.DragDelta -= SelectorThumb_DragDelta;
             }
             if (container != null)
             {
                 container.MouseLeftButtonDown -= Conainter_MouseLeftButtonDown;
             }
 
-            selctorThumb = (Thumb)GetTemplateChild(PART_Selctor);
-            if (selctorThumb != null)
+            selectorThumb = (Thumb)GetTemplateChild(PART_Selctor);
+            if (selectorThumb != null)
             {
-                selctorThumb.DragDelta += SelectorThumb_DragDelta;
-                selctorThumb.MouseLeftButtonDown += SelctorThumb_MouseLeftButtonDown;
+                selectorThumb.DragDelta += SelectorThumb_DragDelta;
+                selectorThumb.MouseLeftButtonDown += SelctorThumb_MouseLeftButtonDown;
             }
 
             container = (Panel)GetTemplateChild(PART_Container);
@@ -83,9 +88,21 @@ namespace T.Controls
             base.OnApplyTemplate();
         }
 
+        public void UpdateColor()
+        {
+            if (selectorThumb != null)
+            {
+                var color = CalcluteColor(GetSelectorCenter());
+                if (color != SelectedColor)
+                {
+                    SelectedColor = color;
+                }
+            }
+        }
+
         private void SelctorThumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var point = e.GetPosition(selctorThumb);
+            var point = e.GetPosition(selectorThumb);
             Console.WriteLine(point);
         }
 
@@ -97,35 +114,53 @@ namespace T.Controls
         private void Conainter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var point = e.GetPosition(container);
+            SetSelectorPosition(point.X -selectorThumb.ActualWidth / 2, point.Y - selectorThumb.ActualHeight / 2);
             SetColor(point);
         }
 
         private void SelectorThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            var left = Canvas.GetLeft(selctorThumb) + e.HorizontalChange;
-            var top = Canvas.GetTop(selctorThumb) + e.VerticalChange;
-            var point = CalculteLocation(left, top);
+            var left = Canvas.GetLeft(selectorThumb) + e.HorizontalChange;
+            var top = Canvas.GetTop(selectorThumb) + e.VerticalChange;
+            var point = SetSelectorPosition(left, top);
             SetColor(point);
         }
 
-        private Point CalculteLocation(double left, double top)
+        /// <summary>
+        /// set selector thumb position
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <returns>return the selector thumb center position relatived to container</returns>
+        private Point SetSelectorPosition(double left, double top)
         {
             double w = container.ActualWidth;
-            var x = left + selctorThumb.ActualWidth/2;
+            var x = left + selectorThumb.ActualWidth/2;
             x = x > w ? w : x;
             x = x < 0 ? 0 : x;
 
             double h = container.ActualHeight;
-            double y = top + selctorThumb.ActualHeight/2;
+            double y = top + selectorThumb.ActualHeight/2;
             y = y > h ? h : y;
             y = y < 0 ? 0 : y;
+            Canvas.SetLeft(selectorThumb, x - selectorThumb.ActualWidth / 2);
+            Canvas.SetTop(selectorThumb, y - selectorThumb.ActualHeight / 2);
             return new Point(x, y);
+        }
+
+        /// <summary>
+        /// get selector thumb current position relatived to container
+        /// </summary>
+        /// <returns></returns>
+        private Point GetSelectorCenter()
+        {
+            var left = Canvas.GetLeft(selectorThumb);
+            var top = Canvas.GetTop(selectorThumb);
+            return new Point(left + selectorThumb.ActualWidth / 2, top + selectorThumb.ActualHeight / 2);
         }
         
         private void SetColor(Point point)
         {
-            Canvas.SetLeft(selctorThumb, point.X - selctorThumb.ActualWidth/2);
-            Canvas.SetTop(selctorThumb, point.Y - selctorThumb.ActualHeight / 2);
             var color = CalcluteColor(point);
             if (color != SelectedColor)
             {
@@ -136,15 +171,14 @@ namespace T.Controls
         /// <summary>
         /// 计算对应的颜色
         /// </summary>
-        /// <param name="point">先对于container的位置</param>
+        /// <param name="point">相对于于container的位置</param>
         /// <returns></returns>
         private Color CalcluteColor(Point point)
         {
-            var c = new Vector3i(SourceColor);
             var px = point.X / container.ActualWidth;
             var py = point.Y / container.ActualHeight;
-            var ccolor = (white * (1 - px) + c * px) * (1 - py);
-            return ccolor.ToColor();
+            var color= ColorHelper.HSV2RGB(new HSVColor((float)Hub, (float)(px), (float)(1 - py)));
+            return color;
         }
     }
 }
