@@ -30,7 +30,19 @@ namespace T.Controls
         }
 
         public static readonly DependencyProperty HubProperty =
-            DependencyProperty.Register("Hub", typeof(double), typeof(SingleColorPanel), new PropertyMetadata(1.0));
+            DependencyProperty.Register("Hub", typeof(double), typeof(SingleColorPanel), new PropertyMetadata(1.0, OnHubChanged));
+
+        private static void OnHubChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (SingleColorPanel)d;
+            var hub = (double)e.NewValue;
+            var hsv = ColorHelper.RGB2HSV(control.SelectedColor);
+            if (control.container != null)
+            {
+                control.SetColor(ColorHelper.HSV2RGB( new HSVColor( hub,hsv.S,hsv.V)));
+            }
+        }
+
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
@@ -43,7 +55,9 @@ namespace T.Controls
         private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (SingleColorPanel)d;
-            var color = (Color)e.NewValue;
+            if (control.changedBySelf)
+                return;
+                var color = (Color)e.NewValue;
             var hsv = ColorHelper.RGB2HSV(color);
             if (hsv.H != control.Hub)
             {
@@ -168,13 +182,21 @@ namespace T.Controls
             var top = Canvas.GetTop(selectorThumb);
             return new Point(left + selectorThumb.ActualWidth / 2, top + selectorThumb.ActualHeight / 2);
         }
-        
+
+        private bool changedBySelf = false;
         private void SetColor(Point point)
         {
             var color = CalcluteColor(point);
+            SetColor(color);
+        }
+
+        private void SetColor(Color color)
+        {
             if (color != SelectedColor)
             {
+                changedBySelf = true;
                 SelectedColor = color;
+                changedBySelf = false;
             }
         }
 
