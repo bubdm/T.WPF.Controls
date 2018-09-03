@@ -53,8 +53,10 @@ namespace T.Controls
                     control.SetSelectorPositionByScale(hsv.S,1- hsv.V);
                 }
             }
-
         }
+
+
+
 
         private Thumb selectorThumb;
         private Panel container;
@@ -152,7 +154,8 @@ namespace T.Controls
         /// <returns>return the selector thumb center position relatived to container</returns>
         private void SetSelectorPositionByScale(double pleft, double ptop)
         {
-            SetSelectorPosition(container.ActualWidth * pleft - selectorThumb.ActualWidth / 2, container.ActualHeight * ptop - selectorThumb.ActualHeight / 2);
+            SetSelectorPosition(container.ActualWidth * pleft - selectorThumb.ActualWidth / 2,
+                container.ActualHeight * ptop - selectorThumb.ActualHeight / 2);
         }
 
         /// <summary>
@@ -176,9 +179,9 @@ namespace T.Controls
         }
 
         /// <summary>
-        /// 计算对应的颜色
+        /// calculate color accord postion
         /// </summary>
-        /// <param name="point">相对于于container的位置</param>
+        /// <param name="point">postion relative to container</param>
         /// <returns></returns>
         private Color CalcluteColor(Point point)
         {

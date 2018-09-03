@@ -80,7 +80,7 @@
                                 <Ellipse  Width="17" Height="17" StrokeThickness="3" Stroke="Black" Fill="Transparent"/>
                             </Grid>
                         </Viewbox>
-                        
+
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -96,25 +96,25 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                            <Grid x:Name="PART_Container" Margin="{TemplateBinding Padding}">
-                                <Rectangle x:Name="WhiteGradient" Margin="0">
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                            <GradientStop  Offset="0" Color="#ffffffff" />
-                                            <GradientStop x:Name="color" Offset="1"
+                        <Grid x:Name="PART_Container" Margin="{TemplateBinding Padding}">
+                            <Rectangle x:Name="WhiteGradient" Margin="0">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop  Offset="0" Color="#ffffffff" />
+                                        <GradientStop x:Name="color" Offset="1"
                                                           Color="{Binding Hub, RelativeSource={RelativeSource Mode=TemplatedParent},
                                                            Converter={StaticResource HubToColorConverter}, UpdateSourceTrigger=PropertyChanged}" />
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <Rectangle x:Name="BlackGradient" Margin="0">
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush StartPoint="0,1" EndPoint="0, 0">
-                                            <GradientStop Offset="0" Color="#ff000000" />
-                                            <GradientStop Offset="1" Color="#00000000" />
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Rectangle x:Name="BlackGradient" Margin="0">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,1" EndPoint="0, 0">
+                                        <GradientStop Offset="0" Color="#ff000000" />
+                                        <GradientStop Offset="1" Color="#00000000" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
                             <Canvas Margin="0">
                                 <Thumb x:Name="PART_Selector"
                                         Style="{TemplateBinding SelectorStyle}"
@@ -123,7 +123,7 @@
                                 </Thumb>
                             </Canvas>
                         </Grid>
-                        
+
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -186,7 +186,12 @@
                                               IsChecked="True"
                                               Style="{TemplateBinding ExpanderStyle}"/>
                             </Grid>
-                            <DockPanel Grid.Column="1" Grid.RowSpan="2"
+                            <local:ColorEditorPanel Grid.Column="1" Grid.RowSpan="2"
+                                                    Width="90"
+                                                    Color="{Binding Color ,RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                                                    Background="{TemplateBinding Background}"
+                                                    Visibility="{Binding IsChecked, ElementName=expandButton, Converter={StaticResource NullableBoolToVisibility}}"/>
+                            <!--<DockPanel Grid.Column="1" Grid.RowSpan="2"
                                        Width="90"
                                        Background="{TemplateBinding Background}"
                                        Visibility="{Binding IsChecked, ElementName=expandButton, Converter={StaticResource NullableBoolToVisibility}}">
@@ -206,28 +211,109 @@
                                     </StackPanel.Resources>
                                     <DockPanel>
                                         <TextBlock DockPanel.Dock="Left">R</TextBlock>
-                                        <TextBox DockPanel.Dock="Right"
-                                                   Text="{Binding Color.R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox x:Name="RText" DockPanel.Dock="Right"
+                                                   Text="{Binding Color.R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            --><!--<TextBox.Text>
+                                                <MultiBinding Converter="{StaticResource }" ConverterParameter="R">
+                                                    <Binding Path="Color" RelativeSource="{RelativeSource Mode=TemplatedParent}" Mode="TwoWay"/>
+                                                    <Binding Path="Text" ElementName="GText"/>
+                                                    <Binding Path="Text" ElementName="BText"/>
+                                                    <Binding Path="Text" ElementName="AText"/>
+                                                </MultiBinding>
+                                            </TextBox.Text>--><!--
+                                        </TextBox>
                                     </DockPanel>
                                     <DockPanel>
                                         <TextBlock DockPanel.Dock="Left">G</TextBlock>
-                                        <TextBox DockPanel.Dock="Right" 
-                                                   Text="{Binding Color.G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                        <TextBox x:Name="GText" DockPanel.Dock="Right" 
+                                                 Text="{Binding Color.G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                     </DockPanel>
                                     <DockPanel>
                                         <TextBlock DockPanel.Dock="Left">B</TextBlock>
-                                        <TextBox DockPanel.Dock="Right" 
+                                        <TextBox x:Name="BText" DockPanel.Dock="Right" 
                                                    Text="{Binding Color.B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                     </DockPanel>
-                                    <DockPanel>
-                                        <TextBlock DockPanel.Dock="Left">A</TextBlock>
-                                        <TextBox DockPanel.Dock="Right" 
+                                    <ContentControl>
+                                        <DockPanel>
+                                            <TextBlock DockPanel.Dock="Left">A</TextBlock>
+                                            <TextBox x:Name="AText" DockPanel.Dock="Right" 
                                                    Text="{Binding Color.A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                        </DockPanel>
+                                    </ContentControl>
+                                    
+                                </StackPanel>
+                            </DockPanel>-->
+                        </Grid>
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <converters:ColorToAConverters x:Key="ColorToAConverters"/>
+    <converters:ColorToRConverters x:Key="ColorToRConverters"/>
+    <converters:ColorToGConverters x:Key="ColorToGConverters"/>
+    <converters:ColorToBConverters x:Key="ColorToBConverters"/>
+
+    <Style TargetType="local:ColorEditorPanel">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:ColorEditorPanel">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            >
+                        <Grid>
+                            <DockPanel Width="90"
+                                       Background="{TemplateBinding Background}">
+                                <TextBox DockPanel.Dock="Bottom" 
+                                         x:Name="HexText"
+                                         Text="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ColorToHexConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                         VerticalAlignment="Center" Margin="4"/>
+                                <StackPanel DockPanel.Dock="Top">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Margin" Value="4"/>
+                                        </Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Margin" Value="4"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <DockPanel>
+                                        <TextBlock DockPanel.Dock="Left">R</TextBlock>
+                                        <TextBox x:Name="RText" DockPanel.Dock="Right"
+                                                   Text="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                    Converter={StaticResource ColorToRConverters},ConverterParameter={x:Reference Name=HexText}}">
+                                        </TextBox>
                                     </DockPanel>
+                                    <DockPanel>
+                                        <TextBlock DockPanel.Dock="Left">G</TextBlock>
+                                        <TextBox x:Name="GText" DockPanel.Dock="Right" 
+                                                 Text="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                    Converter={StaticResource ColorToGConverters},ConverterParameter={x:Reference Name=HexText}}"/>
+                                    </DockPanel>
+                                    <DockPanel>
+                                        <TextBlock DockPanel.Dock="Left">B</TextBlock>
+                                        <TextBox x:Name="BText" DockPanel.Dock="Right" 
+                                                   Text="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                    Converter={StaticResource ColorToBConverters},ConverterParameter={x:Reference Name=HexText}}"/>
+                                    </DockPanel>
+                                    <ContentControl>
+                                        <DockPanel>
+                                            <TextBlock DockPanel.Dock="Left">A</TextBlock>
+                                            <TextBox x:Name="AText" DockPanel.Dock="Right" 
+                                                   Text="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                    Converter={StaticResource ColorToAConverters},ConverterParameter={x:Reference Name=HexText}}"/>
+                                        </DockPanel>
+                                    </ContentControl>
+
                                 </StackPanel>
                             </DockPanel>
                         </Grid>
-
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

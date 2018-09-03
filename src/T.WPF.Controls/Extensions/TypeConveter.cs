@@ -36,6 +36,21 @@ namespace T.Controls.Extensions
             return double.Parse(source);
         }
 
+
+        /// <summary>
+        /// convert string to byte
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns>if success, return result, else return defaultValue</returns>
+        public static byte ToByte(this string source, byte defaultValue)
+        {
+            if (string.IsNullOrEmpty(source))
+                return defaultValue;
+            byte result;
+            return byte.TryParse(source, out result) ? result : defaultValue;
+        }
+
         public static Color ToColor(int source)
         {
             return Colors.Red;

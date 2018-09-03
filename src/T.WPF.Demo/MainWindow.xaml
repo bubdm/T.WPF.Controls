@@ -26,6 +26,11 @@
                     <SolidColorBrush Color="{Binding Color, ElementName=colorpicker, UpdateSourceTrigger=PropertyChanged}"/>
                 </Rectangle.Fill>
             </Rectangle>
+
+            <TextBox Width="100" Height="40" />
+            <TextBox Width="100" Height="40"  Text="{Binding Value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+
         </StackPanel>
         
     </Grid>

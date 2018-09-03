@@ -48,14 +48,17 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ColorEditorPanel.cs" />
     <Compile Include="Controls\ColorPicker.cs" />
     <Compile Include="Controls\ColorsSelector.cs" />
     <Compile Include="Controls\SingleColorPanel.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\CalculatorConverter.cs" />
     <Compile Include="Converters\ColorConverters.cs" />
+    <Compile Include="Converters\ColorToARGBConverters.cs" />
     <Compile Include="Converters\ColorToHexConverter.cs" />
     <Compile Include="Converters\HubToColorConverter.cs" />
+    <Compile Include="Converters\ParameterControl.cs" />
     <Compile Include="core\ColorHelper.cs" />
     <Compile Include="core\HSVColor.cs" />
     <Compile Include="Extensions\TypeConveter.cs" />
@@ -65,6 +68,10 @@
     <Compile Include="Utils\CalculatorHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\ColorPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

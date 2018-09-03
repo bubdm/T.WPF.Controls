@@ -61,5 +61,17 @@ namespace T.Controls
 
         public static readonly DependencyProperty ColorProperty =
             DependencyProperty.Register("Color", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
+
+
+        public object ExpanderContent
+        {
+            get { return (int)GetValue(ExpanderContentProperty); }
+            set { SetValue(ExpanderContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExpanderContentProperty =
+            DependencyProperty.Register("ExpanderContent", typeof(int), typeof(SingleColorPanel), new PropertyMetadata(null));
+
+
     }
 }
