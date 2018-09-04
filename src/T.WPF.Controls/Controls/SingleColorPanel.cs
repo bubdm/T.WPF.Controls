@@ -39,7 +39,7 @@ namespace T.Controls
             var hsv = control.SelectedColor;
             if (control.container != null)
             {
-                control.SetColor(new HSVColor( hub,hsv.S,hsv.V));
+                control.SetColor(new HSVColor(hub,hsv.S,hsv.V));
             }
         }
 
@@ -58,13 +58,13 @@ namespace T.Controls
             if (control.changedBySelf)
                 return;
             var color = (HSVColor)e.NewValue;
+            if (control.container != null)
+            {
+                control.SetSelectorPositionByScale(color.S, 1 - color.V);
+            }
             if (color.H != control.Hub)
             {
                 control.Hub = color.H;
-                if (control.container != null)
-                {
-                    control.SetSelectorPositionByScale(color.S,1- color.V);
-                }
             }
         }
 

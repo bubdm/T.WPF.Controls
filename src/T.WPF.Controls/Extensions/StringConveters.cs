@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace T.Controls.Extensions
 {
-    public static class TypeConveter
+    public static class StringConveters
     {
         /// <summary>
         /// convert string to double
@@ -55,5 +51,6 @@ namespace T.Controls.Extensions
         {
             return Colors.Red;
         }
+
     }
 }

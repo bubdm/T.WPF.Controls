@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using T.Controls.core;
 
 namespace T.Controls
 {
@@ -42,8 +34,6 @@ namespace T.Controls
         public static readonly DependencyProperty ColorsSelectorStyleProperty =
             DependencyProperty.Register("ColorsSelectorStyle", typeof(Style), typeof(ColorPicker), new PropertyMetadata(null));
 
-
-
         public Style SingleColorSelecterStyle
         {
             get { return (Style)GetValue(SingleColorSelecterStyleProperty); }
@@ -63,15 +53,30 @@ namespace T.Controls
             DependencyProperty.Register("Color", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
 
-        public object ExpanderContent
+
+        public Color OriginalColor
         {
-            get { return (int)GetValue(ExpanderContentProperty); }
-            set { SetValue(ExpanderContentProperty, value); }
+            get { return (Color)GetValue(OriginalColorProperty); }
+            set { SetValue(OriginalColorProperty, value); }
         }
 
-        public static readonly DependencyProperty ExpanderContentProperty =
-            DependencyProperty.Register("ExpanderContent", typeof(int), typeof(SingleColorPanel), new PropertyMetadata(null));
+        public static readonly DependencyProperty OriginalColorProperty =
+            DependencyProperty.Register("OriginalColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Red));
 
+        public ICommand ResoreColorCommand { get; set; }
 
+        public ColorPicker()
+        {
+            ResoreColorCommand = new Command(RestoeColor);
+        }
+
+        private void RestoeColor()
+        {
+            if(Color != OriginalColor)
+            {
+                Color = OriginalColor;
+            }
+        }
+        
     }
 }
