@@ -48,10 +48,10 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ColorEditorPanel.cs" />
-    <Compile Include="Controls\ColorPicker.cs" />
-    <Compile Include="Controls\ColorsSelector.cs" />
-    <Compile Include="Controls\SingleColorPanel.cs" />
+    <Compile Include="Controls\ColorPicker\ColorEditorPanel.cs" />
+    <Compile Include="Controls\ColorPicker\ColorPicker.cs" />
+    <Compile Include="Controls\ColorPicker\ColorHueSelector.cs" />
+    <Compile Include="Controls\ColorPicker\ColorSVSelector.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\CalculatorConverter.cs" />
     <Compile Include="Converters\ColorConverters.cs" />

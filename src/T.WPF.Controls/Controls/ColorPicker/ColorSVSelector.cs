@@ -3,43 +3,42 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 using T.Controls.core;
 
 namespace T.Controls
 {
     /// <summary>
-    /// single color selector Panel
+    /// selector of saturation and value channel for HSV color model
     /// </summary>
     [TemplatePart(Name = "PART_Selector", Type =typeof(Thumb))]
     [TemplatePart(Name = "PART_Container", Type =typeof(Panel))]
-    public class SingleColorPanel : Control
+    public class ColorSVSelector : Control
     {
         private static readonly string PART_Selctor = "PART_Selector";
         private static readonly string PART_Container = "PART_Container";
 
-        static SingleColorPanel()
+        static ColorSVSelector()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(SingleColorPanel), new FrameworkPropertyMetadata(typeof(SingleColorPanel)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorSVSelector), new FrameworkPropertyMetadata(typeof(ColorSVSelector)));
         }
        
-        public double Hub
+        public double Hue
         {
-            get { return (double)GetValue(HubProperty); }
-            set { SetValue(HubProperty, value); }
+            get { return (double)GetValue(HueProperty); }
+            set { SetValue(HueProperty, value); }
         }
 
-        public static readonly DependencyProperty HubProperty =
-            DependencyProperty.Register("Hub", typeof(double), typeof(SingleColorPanel), new PropertyMetadata(1.0, OnHubChanged));
+        public static readonly DependencyProperty HueProperty =
+            DependencyProperty.Register("Hue", typeof(double), typeof(ColorSVSelector), new PropertyMetadata(1.0, OnHueChanged));
 
-        private static void OnHubChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnHueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = (SingleColorPanel)d;
-            var hub = (double)e.NewValue;
+            var control = (ColorSVSelector)d;
+            var Hue = (double)e.NewValue;
             var hsv = control.SelectedColor;
             if (control.container != null)
             {
-                control.SetColor(new HSVColor(hub,hsv.S,hsv.V));
+                control.SetColor(new HSVColor(Hue,hsv.S,hsv.V));
             }
         }
 
@@ -50,11 +49,11 @@ namespace T.Controls
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(HSVColor), typeof(SingleColorPanel), new PropertyMetadata(HSVColor.Red, OnSelectedColorChanged));
+            DependencyProperty.Register("SelectedColor", typeof(HSVColor), typeof(ColorSVSelector), new PropertyMetadata(HSVColor.Red, OnSelectedColorChanged));
 
         private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = (SingleColorPanel)d;
+            var control = (ColorSVSelector)d;
             if (control.changedBySelf)
                 return;
             var color = (HSVColor)e.NewValue;
@@ -62,9 +61,9 @@ namespace T.Controls
             {
                 control.SetSelectorPositionByScale(color.S, 1 - color.V);
             }
-            if (color.H != control.Hub)
+            if (color.H != control.Hue)
             {
-                control.Hub = color.H;
+                control.Hue = color.H;
             }
         }
 
@@ -78,7 +77,7 @@ namespace T.Controls
         }
 
         public static readonly DependencyProperty SelectorStyleProperty =
-            DependencyProperty.Register("SelectorStyle", typeof(Style), typeof(SingleColorPanel), new PropertyMetadata(null));
+            DependencyProperty.Register("SelectorStyle", typeof(Style), typeof(ColorSVSelector), new PropertyMetadata(null));
 
         public override void OnApplyTemplate()
         {
@@ -205,7 +204,7 @@ namespace T.Controls
         {
             var px = point.X / container.ActualWidth;
             var py = point.Y / container.ActualHeight;
-            return  (new HSVColor(Hub, px, 1 - py));
+            return  (new HSVColor(Hue, px, 1 - py));
         }
     }
 }

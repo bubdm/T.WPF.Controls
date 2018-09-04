@@ -38,7 +38,7 @@ namespace T.Controls.core
             }
         }
 
-        internal static double GetHube(Color value)
+        internal static double GetHue(Color value)
         {
             return RGB2HSV(value).H;
         }

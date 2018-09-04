@@ -7,7 +7,7 @@
     <converters:CalculatorConverter x:Key="CalConveter"/>
     <converters:NullableBoolToVisibility x:Key="NullableBoolToVisibility"/>
     <converters:ColorToHexConverter x:Key="ColorToHexConverter"/>
-    <converters:HubToColorConverter x:Key="HubToColorConverter"/>
+    <converters:HueToColorConverter x:Key="HueToColorConverter"/>
     <converters:ColorToHSVConverter x:Key="ColorToHSVConverter"/>
     <converters:ColorToAConverters x:Key="ColorToAConverters"/>
     <converters:ColorToRConverters x:Key="ColorToRConverters"/>
@@ -33,11 +33,11 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:HubSelector}">
+    <Style TargetType="{x:Type local:ColorHueSelector}">
         <Setter Property="SelectorThumbStyle" Value="{StaticResource SelectorThumb}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:HubSelector}">
+                <ControlTemplate TargetType="{x:Type local:ColorHueSelector}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -93,12 +93,12 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:SingleColorPanel}">
+    <Style TargetType="{x:Type local:ColorSVSelector}">
         <Setter Property="SelectorStyle" Value="{StaticResource SingleColorThumbStyle}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:SingleColorPanel}">
+                <ControlTemplate TargetType="{x:Type local:ColorSVSelector}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -108,8 +108,8 @@
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                         <GradientStop  Offset="0" Color="#ffffffff" />
                                         <GradientStop x:Name="color" Offset="1"
-                                                          Color="{Binding Hub, RelativeSource={RelativeSource Mode=TemplatedParent},
-                                                           Converter={StaticResource HubToColorConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                                                          Color="{Binding Hue, RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                           Converter={StaticResource HueToColorConverter}, UpdateSourceTrigger=PropertyChanged}" />
                                     </LinearGradientBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
@@ -229,13 +229,13 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <DockPanel>
-                                <local:HubSelector x:Name="colorselector" 
+                                <local:ColorHueSelector x:Name="colorselector" 
                                                       DockPanel.Dock="Right"
                                                       Width="20"
                                                       SelectorThumbStyle="{TemplateBinding ColorsSelectorStyle}"/>
-                                <local:SingleColorPanel x:Name="singleColorPanel" 
+                                <local:ColorSVSelector x:Name="singleColorPanel" 
                                                         DockPanel.Dock="Left"
-                                                        Hub="{Binding Hub, ElementName=colorselector, Mode=TwoWay}"
+                                                        Hue="{Binding Hue, ElementName=colorselector, Mode=TwoWay}"
                                                         SelectedColor="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay,
                                                         Converter={StaticResource ColorToHSVConverter}}"
                                                         SelectorStyle="{TemplateBinding SingleColorSelecterStyle}"/>

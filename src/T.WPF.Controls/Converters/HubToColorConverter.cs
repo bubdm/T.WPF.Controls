@@ -6,18 +6,18 @@ using T.Controls.core;
 
 namespace T.Controls.Converters
 {
-    public class HubToColorConverter : IValueConverter
+    public class HueToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var hub = (double)value;
-            var color= ColorHelper.HSV2RGB(new HSVColor(hub, 1, 1));
+            var Hue = (double)value;
+            var color= ColorHelper.HSV2RGB(new HSVColor(Hue, 1, 1));
             return color;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)ColorHelper.GetHube((Color)value);
+            return (double)ColorHelper.GetHue((Color)value);
         }
     }
 }

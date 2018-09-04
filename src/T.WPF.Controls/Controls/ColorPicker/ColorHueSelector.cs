@@ -6,11 +6,11 @@ using System.Windows.Input;
 namespace T.Controls
 {
     /// <summary>
-    /// 颜色画布，显示和选择所有颜色
+    /// selector of hue channel for HSV color model
     /// </summary>
     [TemplatePart(Name = "PART_SelctorThumb", Type = typeof(Thumb))]
     [TemplatePart(Name = "PART_Container", Type = typeof(Control))]
-    public class HubSelector : Control
+    public class ColorHueSelector : Control
     {
         private static readonly string PART_SelctorThumb = "PART_SelctorThumb";
         private static readonly string PART_Container = "PART_Container";
@@ -18,9 +18,9 @@ namespace T.Controls
 
         private Thumb selectorThumb;
         private Panel container;
-        static HubSelector()
+        static ColorHueSelector()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(HubSelector), new FrameworkPropertyMetadata(typeof(HubSelector)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorHueSelector), new FrameworkPropertyMetadata(typeof(ColorHueSelector)));
         }
 
         /// <summary>
@@ -35,19 +35,21 @@ namespace T.Controls
         /// SelectorThumbStyle DependencyProperty
         /// </summary>
         public static readonly DependencyProperty SelectorThumbStyleProperty =
-            DependencyProperty.Register("SelectorThumbStyle", typeof(Style), typeof(HubSelector), new PropertyMetadata(null));
-        public double Hub
+            DependencyProperty.Register("SelectorThumbStyle", typeof(Style), typeof(ColorHueSelector), new PropertyMetadata(null));
+
+
+        public double Hue
         {
-            get { return (double)GetValue(HubProperty); }
-            set { SetValue(HubProperty, value); }
+            get { return (double)GetValue(HueProperty); }
+            set { SetValue(HueProperty, value); }
         }
 
-        public static readonly DependencyProperty HubProperty =
-            DependencyProperty.Register("Hub", typeof(double), typeof(HubSelector), new PropertyMetadata(1.0, OnHubChangedCallback));
+        public static readonly DependencyProperty HueProperty =
+            DependencyProperty.Register("Hue", typeof(double), typeof(ColorHueSelector), new PropertyMetadata(1.0, OnHueChangedCallback));
 
-        private static void OnHubChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnHueChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = (HubSelector)d;
+            var control = (ColorHueSelector)d;
             control.SetSlectorPositon((double)e.NewValue);
         }
 
@@ -89,9 +91,9 @@ namespace T.Controls
             var point = e.GetPosition(container);
             var x = point.Y / container.ActualHeight;
             Canvas.SetTop(selectorThumb, point.Y - selectorThumb.ActualHeight / 2);
-            if (Hub != x)
+            if (Hue != x)
             {
-                Hub = x;
+                Hue = x;
             }
         }
 
@@ -105,9 +107,9 @@ namespace T.Controls
                 top = container.ActualHeight - delta;
             Canvas.SetTop(selectorThumb, top);
             var x = (top + delta) / container.ActualHeight;
-            if (Hub != x)
+            if (Hue != x)
             {
-                Hub = x;
+                Hue = x;
             }
         }
     }
