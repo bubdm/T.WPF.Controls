@@ -36,41 +36,37 @@ namespace T.Controls
         {
             var control = (SingleColorPanel)d;
             var hub = (double)e.NewValue;
-            var hsv = ColorHelper.RGB2HSV(control.SelectedColor);
+            var hsv = control.SelectedColor;
             if (control.container != null)
             {
-                control.SetColor(ColorHelper.HSV2RGB( new HSVColor( hub,hsv.S,hsv.V)));
+                control.SetColor(new HSVColor( hub,hsv.S,hsv.V));
             }
         }
 
-        public Color SelectedColor
+        public HSVColor SelectedColor
         {
-            get { return (Color)GetValue(SelectedColorProperty); }
+            get { return (HSVColor)GetValue(SelectedColorProperty); }
             set { SetValue(SelectedColorProperty, value); }
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(SingleColorPanel), new PropertyMetadata(Colors.Red, OnSelectedColorChanged));
+            DependencyProperty.Register("SelectedColor", typeof(HSVColor), typeof(SingleColorPanel), new PropertyMetadata(HSVColor.Red, OnSelectedColorChanged));
 
         private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (SingleColorPanel)d;
             if (control.changedBySelf)
                 return;
-                var color = (Color)e.NewValue;
-            var hsv = ColorHelper.RGB2HSV(color);
-            if (hsv.H != control.Hub)
+            var color = (HSVColor)e.NewValue;
+            if (color.H != control.Hub)
             {
-                control.Hub = hsv.H;
+                control.Hub = color.H;
                 if (control.container != null)
                 {
-                    control.SetSelectorPositionByScale(hsv.S,1- hsv.V);
+                    control.SetSelectorPositionByScale(color.S,1- color.V);
                 }
             }
         }
-
-
-
 
         private Thumb selectorThumb;
         private Panel container;
@@ -190,7 +186,7 @@ namespace T.Controls
             SetColor(color);
         }
 
-        private void SetColor(Color color)
+        private void SetColor(HSVColor color)
         {
             if (color != SelectedColor)
             {
@@ -205,12 +201,11 @@ namespace T.Controls
         /// </summary>
         /// <param name="point">postion relative to container</param>
         /// <returns></returns>
-        private Color CalcluteColor(Point point)
+        private HSVColor CalcluteColor(Point point)
         {
             var px = point.X / container.ActualWidth;
             var py = point.Y / container.ActualHeight;
-            var color= ColorHelper.HSV2RGB(new HSVColor(Hub, px, 1 - py));
-            return color;
+            return  (new HSVColor(Hub, px, 1 - py));
         }
     }
 }

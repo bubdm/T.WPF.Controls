@@ -9,6 +9,8 @@ namespace T.Controls.core
 {
     public struct HSVColor
     {
+
+        public static HSVColor Red { get; set; } = new HSVColor(1,0,0);
         public double H { get; set; }
         public double S { get; set; }
         public double V { get; set; }

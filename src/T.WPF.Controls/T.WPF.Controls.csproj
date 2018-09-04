@@ -57,6 +57,7 @@
     <Compile Include="Converters\ColorConverters.cs" />
     <Compile Include="Converters\ColorToARGBConverters.cs" />
     <Compile Include="Converters\ColorToHexConverter.cs" />
+    <Compile Include="Converters\ColorToHSVConverter.cs" />
     <Compile Include="Converters\HubToColorConverter.cs" />
     <Compile Include="Converters\ParameterControl.cs" />
     <Compile Include="core\ColorHelper.cs" />

@@ -9,6 +9,7 @@
     <converters:NullableBoolToVisibility x:Key="NullableBoolToVisibility"/>
     <converters:ColorToHexConverter x:Key="ColorToHexConverter"/>
     <converters:HubToColorConverter x:Key="HubToColorConverter"/>
+    <converters:ColorToHSVConverter x:Key="ColorToHSVConverter"/>
     <Style x:Key="SelectorThumb" TargetType="Thumb">
         <Setter Property="Height" Value="8"/>
         <Setter Property="Background" Value="#77000000"/>
@@ -167,7 +168,8 @@
                                 <local:SingleColorPanel x:Name="singleColorPanel" 
                                                         DockPanel.Dock="Left"
                                                         Hub="{Binding Hub, ElementName=colorselector, Mode=TwoWay}"
-                                                        SelectedColor="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                                                        SelectedColor="{Binding Color, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay,
+                                                        Converter={StaticResource ColorToHSVConverter}}"
                                                         SelectorStyle="{TemplateBinding SingleColorSelecterStyle}"/>
                             </DockPanel>
                             <Grid Grid.Row="1">
