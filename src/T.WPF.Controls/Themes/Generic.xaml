@@ -5,4 +5,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/T.WPF.Controls;component/Themes/ColorPicker.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+
+    
 </ResourceDictionary>

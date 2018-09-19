@@ -60,6 +60,7 @@
     <Compile Include="Converters\ColorToHSVConverter.cs" />
     <Compile Include="Converters\HubToColorConverter.cs" />
     <Compile Include="Converters\ParameterControl.cs" />
+    <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="core\ColorHelper.cs" />
     <Compile Include="core\Command.cs" />
     <Compile Include="core\HSVColor.cs" />
