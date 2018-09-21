@@ -13,13 +13,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using T.Controls;
 
 namespace T.WPF.Demo
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : CanvasWindow, INotifyPropertyChanged
     {
         private int _value;
 
@@ -40,6 +41,18 @@ namespace T.WPF.Demo
         {
             InitializeComponent();
             DataContext = this;
+        }
+
+        private void WindowContainer_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Console.WriteLine(e.NewValue);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var user = new UserControl1();
+            user.Container = this;
+            user.Show();
         }
     }
 }

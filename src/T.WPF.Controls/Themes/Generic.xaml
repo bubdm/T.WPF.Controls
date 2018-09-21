@@ -6,5 +6,79 @@
         <ResourceDictionary Source="pack://application:,,,/T.WPF.Controls;component/Themes/ColorPicker.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="DefaultContainerStyle" TargetType="ContentControl">
+        
+    </Style>
+
+    <Style TargetType="{x:Type local:WindowContainerBase}">
+        <Setter Property="Background" Value="{x:Static SystemColors.WindowBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:WindowContainerBase}">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <AdornerDecorator>
+                                <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </AdornerDecorator>
+                        </Border>
+                        <Canvas x:Name="PART_WindowContainer" 
+                                Background="#ffeeeeee">
+                            
+                        </Canvas>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style BasedOn="{StaticResource {x:Type local:WindowContainerBase}}" TargetType="{x:Type local:CanvasWindow}"/>
+
+    <Style x:Key="TileThumb" TargetType="Thumb">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <DockPanel Focusable="False">
+                            <Image Width="20" Height="20"
+                                       Source="D:\pictures\temp\1.jpg"></Image>
+                            <TextBlock DockPanel.Dock="Left" Text="TemplateBinding Title}"
+                                           VerticalAlignment="Center"/>
+                            <Button>sjfiejfifje</Button>
+                        </DockPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
+    <Style TargetType="{x:Type local:WindowControl}">
+        <Setter Property="BorderBrush" Value="Red"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:WindowControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <DockPanel>
+                            <Thumb DockPanel.Dock="Top" x:Name="PART_TilePanel" Height="30"
+                                       BorderThickness="0"
+                                   Background="SkyBlue"
+                                   Style="{StaticResource TileThumb}">
+                            </Thumb>
+                            <Border DockPanel.Dock="Top" Background="{TemplateBinding Background}">
+                                <ContentPresenter/>
+                            </Border>
+                        </DockPanel>
+                        
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 </ResourceDictionary>
