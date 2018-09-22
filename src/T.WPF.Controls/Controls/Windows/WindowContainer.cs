@@ -45,6 +45,11 @@ namespace T.Controls
         protected override void OnAddWindow(UIElement windowControl)
         {
             WindowsContainer.Children.Add(windowControl);
+            var zindex = (int)windowControl.GetValue(Panel.ZIndexProperty);
+            if(zindex > maxZIndex)
+            {
+                maxZIndex = zindex;
+            }
         }
 
         protected override void OnRemoveWindow(UIElement windowControl)
@@ -57,18 +62,31 @@ namespace T.Controls
             BringPanelChildToFront(windowControl);
         }
 
+        int maxZIndex = 0;
+
         private void BringPanelChildToFront(UIElement windowControl)//图片置于最顶层显示
         {
             if (windowControl == null || WindowsContainer == null) return;
             if(WindowsContainer.Children.Count> 1)
             {
-                var maxZ = WindowsContainer.Children.OfType<UIElement>()//linq语句，取Zindex的最大值
-              .Where(x => x != windowControl)
-              .Select(x => Canvas.GetZIndex(x))
-              .Max();
-                Canvas.SetZIndex(windowControl, maxZ + 1);
+                if(maxZIndex != int.MaxValue)
+                {
+                    Panel.SetZIndex(windowControl, maxZIndex++);
+                }
+                else
+                {
+                    var children = WindowsContainer.Children
+                                    .OfType<UIElement>()
+                                    .Where(e => e != null);
+                    foreach(var child in children)
+                    {
+                        child.SetValue(Panel.ZIndexProperty, 0);
+                    }
+                    maxZIndex = 1;
+                    windowControl.SetValue(Panel.ZIndexProperty, maxZIndex);
+                }
             }
-            
+
         }
     }
 }
