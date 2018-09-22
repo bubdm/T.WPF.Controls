@@ -46,7 +46,7 @@ namespace T.Controls
             DependencyProperty.Register("DefaultWindowStyle", typeof(Style), typeof(WindowContainerBase), new PropertyMetadata(null));
         
         
-        public void AddWindow(UIElement windowControl)
+        public void AddWindow(FrameworkElement windowControl)
         {
             if (!windows.Contains(windowControl))
             {
@@ -55,29 +55,37 @@ namespace T.Controls
             }
         }
 
-        public void RemoveWindow(UIElement windowControl)
+        public void RemoveWindow(FrameworkElement windowControl)
         {
             if (windows.Remove(windowControl))
             {
                 OnRemoveWindow(windowControl);
             }
         }
-        public void BringToFront(UIElement windowControl)
+        public void BringToFront(FrameworkElement windowControl)
         {
             OnBringToFront(windowControl);
         }
 
+        internal void SetChildMax(FrameworkElement windowControl)
+        {
+            OnSetMax(windowControl);
+        }
 
-        protected virtual void OnAddWindow(UIElement windowControl)
+        protected virtual void OnAddWindow(FrameworkElement windowControl)
         {
 
         }
-        protected virtual void OnRemoveWindow(UIElement windowControl)
+        protected virtual void OnRemoveWindow(FrameworkElement windowControl)
         {
 
         }
 
-        protected virtual void OnBringToFront(UIElement windowControl)
+        protected virtual void OnBringToFront(FrameworkElement windowControl)
+        {
+
+        }
+        protected virtual void OnSetMax(FrameworkElement windowControl)
         {
 
         }

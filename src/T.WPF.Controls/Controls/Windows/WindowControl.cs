@@ -115,6 +115,11 @@ namespace T.Controls
             Container.RemoveWindow(this);
         }
 
+        public void M()
+        {
+
+        }
+
         public override void OnApplyTemplate()
         {
             tilePanel = GetTemplateChild(PART_TilePanel) as Thumb;

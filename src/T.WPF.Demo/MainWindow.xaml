@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:T.WPF.Demo"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
+        Foreground="White"
                  IsVisibleChanged="WindowContainer_IsVisibleChanged" >
     <ScrollViewer>
         <Grid >

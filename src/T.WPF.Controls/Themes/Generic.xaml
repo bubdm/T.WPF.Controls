@@ -4,10 +4,10 @@
     xmlns:local="clr-namespace:T.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/T.WPF.Controls;component/Themes/ColorPicker.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/T.WPF.Controls;component/Themes/PathData.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="DefaultContainerStyle" TargetType="ContentControl">
-        
     </Style>
 
     <Style TargetType="{x:Type local:WindowContainerBase}">
@@ -25,7 +25,6 @@
                         </Border>
                         <Canvas x:Name="PART_WindowContainer" 
                                 Background="#ffeeeeee">
-                            
                         </Canvas>
                     </DockPanel>
                 </ControlTemplate>
@@ -34,19 +33,91 @@
     </Style>
     <Style BasedOn="{StaticResource {x:Type local:WindowContainerBase}}" TargetType="{x:Type local:CanvasWindow}"/>
 
-    <Style x:Key="TileThumb" TargetType="Thumb">
+
+    <Style x:Key="NoStyleButtonStyle" TargetType="ButtonBase">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Thumb">
+                <ControlTemplate TargetType="ButtonBase">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="CloseButtonStyle" BasedOn="{StaticResource NoStyleButtonStyle}" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="Red"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MaxButtonStyle" BasedOn="{StaticResource NoStyleButtonStyle}" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="{x:Static SystemColors.ActiveCaptionBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MinButtonStyle" BasedOn="{StaticResource NoStyleButtonStyle}" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="10,8,10,8"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="{x:Static SystemColors.ActiveCaptionBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="local:TileThumbPanel">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:TileThumbPanel">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <DockPanel Focusable="False">
-                            <Image Width="20" Height="20"
-                                       Source="D:\pictures\temp\1.jpg"></Image>
-                            <TextBlock DockPanel.Dock="Left" Text="TemplateBinding Title}"
-                                           VerticalAlignment="Center"/>
-                            <Button>sjfiejfifje</Button>
+                            <Image DockPanel.Dock="Left"
+                                   Width="20"
+                                   Margin="4"
+                                   Source="{TemplateBinding Icon}"></Image>
+                            <Button DockPanel.Dock="Right"
+                                    Style="{StaticResource CloseButtonStyle}"
+                                    Width="36">
+                                <Path Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" 
+                                      Fill="White" StrokeThickness="0"
+                                      Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Button>
+                            <ToggleButton DockPanel.Dock="Right"
+                                    Style="{StaticResource MaxButtonStyle}"
+                                    Width="36">
+                                <Path Data="M4,4H20V20H4V4M6,8V18H18V8H6Z" 
+                                      Fill="White" StrokeThickness="0"
+                                      Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </ToggleButton>
+                            <Button DockPanel.Dock="Right"
+                                    Style="{StaticResource MinButtonStyle}"
+                                    Width="36">
+                                <Path Data="M0,4 4,4" 
+                                      Stroke="White" StrokeThickness="2"
+                                      Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                            </Button>
+                            <TextBlock DockPanel.Dock="Left" Text="{TemplateBinding Title}"
+                                       Margin="4"
+                                       VerticalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis"/>
                         </DockPanel>
                     </Border>
                 </ControlTemplate>
@@ -64,10 +135,14 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <DockPanel>
-                            <local:TileThumbPanel DockPanel.Dock="Top" x:Name="PART_TilePanel" Height="30"
-                                       BorderThickness="0"
-                                   Background="SkyBlue"
-                                   Style="{StaticResource TileThumb}">
+                            <local:TileThumbPanel x:Name="PART_TilePanel" 
+                                                  DockPanel.Dock="Top" 
+                                                  Height="26"
+                                                  BorderThickness="0"
+                                                  Padding="4"
+                                                  Icon="{TemplateBinding Icon}"
+                                                  Title="{TemplateBinding Title}"
+                                   Background="SkyBlue">
                             </local:TileThumbPanel>
                             <Border DockPanel.Dock="Top" Background="{TemplateBinding Background}">
                                 <ContentPresenter/>

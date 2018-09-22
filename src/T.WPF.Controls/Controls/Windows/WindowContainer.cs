@@ -17,7 +17,6 @@ namespace T.Controls
 {
     /// <summary>
     ///
-    ///     <MyNamespace:WindowContainer/>
     ///
     /// </summary>
     public class CanvasWindow : WindowContainerBase
@@ -42,29 +41,34 @@ namespace T.Controls
 
             base.OnApplyTemplate();
         }
-        protected override void OnAddWindow(UIElement windowControl)
+        protected override void OnAddWindow(FrameworkElement windowControl)
         {
             WindowsContainer.Children.Add(windowControl);
-            var zindex = (int)windowControl.GetValue(Panel.ZIndexProperty);
-            if(zindex > maxZIndex)
-            {
-                maxZIndex = zindex;
-            }
+            BringPanelChildToFront(windowControl);
         }
 
-        protected override void OnRemoveWindow(UIElement windowControl)
+        protected override void OnRemoveWindow(FrameworkElement windowControl)
         {
             WindowsContainer.Children.Remove(windowControl);
         }
 
-        protected override void OnBringToFront(UIElement windowControl)
+        protected override void OnBringToFront(FrameworkElement windowControl)
         {
             BringPanelChildToFront(windowControl);
         }
 
+        protected override void OnSetMax(FrameworkElement windowControl)
+        {
+            windowControl.SetValue(CanvasContainer.LeftProperty, 0);
+            windowControl.SetValue(CanvasContainer.TopProperty, 0);
+            windowControl.Width = WindowsContainer.ActualWidth;
+            windowControl.Height = WindowsContainer.ActualHeight;
+
+        }
+
         int maxZIndex = 0;
 
-        private void BringPanelChildToFront(UIElement windowControl)//图片置于最顶层显示
+        private void BringPanelChildToFront(FrameworkElement windowControl)
         {
             if (windowControl == null || WindowsContainer == null) return;
             if(WindowsContainer.Children.Count> 1)
@@ -76,7 +80,7 @@ namespace T.Controls
                 else
                 {
                     var children = WindowsContainer.Children
-                                    .OfType<UIElement>()
+                                    .OfType<FrameworkElement>()
                                     .Where(e => e != null);
                     foreach(var child in children)
                     {
