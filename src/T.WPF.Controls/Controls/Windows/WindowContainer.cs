@@ -44,17 +44,31 @@ namespace T.Controls
         }
         protected override void OnAddWindow(UIElement windowControl)
         {
-            //var left = CanvasContainer.GetLeft(windowControl);
-            //Canvas.SetLeft(windowControl,left);
-            //var top = CanvasContainer.GetTop(windowControl);
-            //Canvas.SetTop(windowControl, top);
-
             WindowsContainer.Children.Add(windowControl);
         }
 
         protected override void OnRemoveWindow(UIElement windowControl)
         {
             WindowsContainer.Children.Remove(windowControl);
+        }
+
+        protected override void OnBringToFront(UIElement windowControl)
+        {
+            BringPanelChildToFront(windowControl);
+        }
+
+        private void BringPanelChildToFront(UIElement windowControl)//图片置于最顶层显示
+        {
+            if (windowControl == null || WindowsContainer == null) return;
+            if(WindowsContainer.Children.Count> 1)
+            {
+                var maxZ = WindowsContainer.Children.OfType<UIElement>()//linq语句，取Zindex的最大值
+              .Where(x => x != windowControl)
+              .Select(x => Canvas.GetZIndex(x))
+              .Max();
+                Canvas.SetZIndex(windowControl, maxZ + 1);
+            }
+            
         }
     }
 }

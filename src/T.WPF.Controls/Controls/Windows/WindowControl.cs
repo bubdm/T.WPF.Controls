@@ -87,6 +87,16 @@ namespace T.Controls
 
         private Thumb tilePanel;
 
+        public WindowControl()
+        {
+            this.PreviewMouseLeftButtonDown += WindowControl_PreviewMouseLeftButtonDown;
+        }
+
+        private void WindowControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Container.BringToFront(this);
+        }
+
 
         public void Show()
         {
@@ -136,9 +146,10 @@ namespace T.Controls
             {
                 y = Container.ActualHeight - ActualHeight;
             }
-            Console.WriteLine(Container.ActualWidth - ActualWidth);
             SetValue(CanvasContainer.LeftProperty, x);
             SetValue(CanvasContainer.TopProperty, y);
         }
+
+        
     }
 }

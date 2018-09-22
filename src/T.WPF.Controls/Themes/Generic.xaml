@@ -64,11 +64,11 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <DockPanel>
-                            <Thumb DockPanel.Dock="Top" x:Name="PART_TilePanel" Height="30"
+                            <local:TileThumbPanel DockPanel.Dock="Top" x:Name="PART_TilePanel" Height="30"
                                        BorderThickness="0"
                                    Background="SkyBlue"
                                    Style="{StaticResource TileThumb}">
-                            </Thumb>
+                            </local:TileThumbPanel>
                             <Border DockPanel.Dock="Top" Background="{TemplateBinding Background}">
                                 <ContentPresenter/>
                             </Border>

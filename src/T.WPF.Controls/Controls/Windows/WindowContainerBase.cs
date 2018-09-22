@@ -62,12 +62,22 @@ namespace T.Controls
                 OnRemoveWindow(windowControl);
             }
         }
+        public void BringToFront(UIElement windowControl)
+        {
+            OnBringToFront(windowControl);
+        }
+
 
         protected virtual void OnAddWindow(UIElement windowControl)
         {
 
         }
         protected virtual void OnRemoveWindow(UIElement windowControl)
+        {
+
+        }
+
+        protected virtual void OnBringToFront(UIElement windowControl)
         {
 
         }

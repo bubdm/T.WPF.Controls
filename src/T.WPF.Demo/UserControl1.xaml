@@ -9,7 +9,8 @@
              Title="sefsefsefsef" 
              Width="200" Height="200"
              Icon="D:\pictures\temp\1.jpg"
-             tc:CanvasContainer.Left="100" tc:CanvasContainer.Top="100">
+             tc:CanvasContainer.Left="100" tc:CanvasContainer.Top="100"
+                  Background="#ff222222">
     <Grid>
         <TextBlock>sjfidesifjeijfsijfoisejfiosejfoiej</TextBlock>
     </Grid>

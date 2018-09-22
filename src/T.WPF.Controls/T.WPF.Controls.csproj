@@ -53,6 +53,7 @@
     <Compile Include="Controls\ColorPicker\ColorHueSelector.cs" />
     <Compile Include="Controls\ColorPicker\ColorSVSelector.cs" />
     <Compile Include="Controls\Windows\CanvasContainer.cs" />
+    <Compile Include="Controls\Windows\TileThumbPanel.cs" />
     <Compile Include="Controls\Windows\WindowCommands.cs" />
     <Compile Include="Controls\Windows\WindowContainer.cs" />
     <Compile Include="Controls\Windows\WindowContainerBase.cs" />
