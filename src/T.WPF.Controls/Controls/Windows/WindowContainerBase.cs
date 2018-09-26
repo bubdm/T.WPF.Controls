@@ -69,8 +69,15 @@ namespace T.Controls
 
         internal void SetChildMax(FrameworkElement windowControl)
         {
-            OnSetMax(windowControl);
+            OnSetChildMax(windowControl);
         }
+
+        internal void SetChildMin(FrameworkElement windowControl)
+        {
+            OnSetChildMin(windowControl);
+        }
+
+        
 
         protected virtual void OnAddWindow(FrameworkElement windowControl)
         {
@@ -85,7 +92,12 @@ namespace T.Controls
         {
 
         }
-        protected virtual void OnSetMax(FrameworkElement windowControl)
+
+        protected virtual void OnSetChildMin(FrameworkElement windowControl)
+        {
+
+        }
+        protected virtual void OnSetChildMax(FrameworkElement windowControl)
         {
 
         }

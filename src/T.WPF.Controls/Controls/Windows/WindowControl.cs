@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace T.Controls
 {
     /// <summary>
     ///
-    ///     <MyNamespace:WindowControl/>
     ///
     /// </summary>
     public class WindowControl : ContentControl
@@ -68,10 +58,7 @@ namespace T.Controls
 
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(WindowControl), new PropertyMetadata(""));
-
-
-
-
+        
         public ImageSource Icon
         {
             get { return (ImageSource)GetValue(IconProperty); }
@@ -90,6 +77,12 @@ namespace T.Controls
         public WindowControl()
         {
             this.PreviewMouseLeftButtonDown += WindowControl_PreviewMouseLeftButtonDown;
+            CommandBindings.Add(new CommandBinding(WindowCommands.CloseWindowControlCommand,
+                (s, e) => Close()));
+            CommandBindings.Add(new CommandBinding(WindowCommands.MaximizeWindowControlCommand,
+                (s, e) => Maximize()));
+            CommandBindings.Add(new CommandBinding(WindowCommands.MinimizeWindowControlCommand,
+                (s, e) => Minimize()));
         }
 
         private void WindowControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -97,27 +90,25 @@ namespace T.Controls
             Container.BringToFront(this);
         }
 
-
         public void Show()
         {
             Visibility = Visibility.Visible;
             Container.AddWindow(this);
         }
 
-        public void Hide()
-        {
-            Visibility = Visibility.Collapsed;
-        }
-
         public void Close()
         {
-            Hide();
             Container.RemoveWindow(this);
         }
 
-        public void M()
+        public void Maximize()
         {
+            Container.SetChildMax(this);
+        }
 
+        public void Minimize()
+        {
+            Container.SetChildMin(this);
         }
 
         public override void OnApplyTemplate()
@@ -154,7 +145,5 @@ namespace T.Controls
             SetValue(CanvasContainer.LeftProperty, x);
             SetValue(CanvasContainer.TopProperty, y);
         }
-
-        
     }
 }

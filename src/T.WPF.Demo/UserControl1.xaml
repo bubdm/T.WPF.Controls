@@ -10,7 +10,7 @@
              Width="200" Height="200"
              Icon="D:\pictures\temp\1.jpg"
              tc:CanvasContainer.Left="100" tc:CanvasContainer.Top="100"
-                  Background="#88aaaaaa">
+             Background="#88aaaaaa">
     <Grid>
         <StackPanel>
             <TextBlock>Hello WPF!</TextBlock>

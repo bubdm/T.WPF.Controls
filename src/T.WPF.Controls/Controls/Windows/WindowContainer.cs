@@ -57,10 +57,10 @@ namespace T.Controls
             BringPanelChildToFront(windowControl);
         }
 
-        protected override void OnSetMax(FrameworkElement windowControl)
+        protected override void OnSetChildMax(FrameworkElement windowControl)
         {
-            windowControl.SetValue(CanvasContainer.LeftProperty, 0);
-            windowControl.SetValue(CanvasContainer.TopProperty, 0);
+            windowControl.SetValue(CanvasContainer.LeftProperty, 0.0);
+            windowControl.SetValue(CanvasContainer.TopProperty, 0.0);
             windowControl.Width = WindowsContainer.ActualWidth;
             windowControl.Height = WindowsContainer.ActualHeight;
 
