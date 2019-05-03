@@ -6,7 +6,7 @@ wpf 的控件集合，主要是对 wpf 原生控件的扩展，加入非常常�
 - [x] ColorPicker(will finish)
 - [ ] PropertyGrid
 - [ ] ScrollTabControl
-- [ ] Dialog inner window
+- [x] Dialog inner window
 - [ ] TimePicker
 
 ### ColorPicker
